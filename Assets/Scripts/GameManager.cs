@@ -91,6 +91,8 @@ public class GameManager : MonoBehaviour
         
         if(isSpatialOn)
         {
+            clash.Clear();
+
             grid.HandleMelee();
         }
         else
@@ -114,7 +116,7 @@ public class GameManager : MonoBehaviour
 
                 if(Distance(s1.x, s2.x, s1.y, s2.y) < 2)
                 {
-                    HandleAttack();
+                    HandleAttack(s1, s2);
                 }
 
                 say++;
@@ -123,10 +125,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void HandleAttack()
+    private void HandleAttack(Vector3 s1, Vector3 s2)
     {
-        
+        GameManager.clash.Add(s1);
+        GameManager.clash.Add(s2);
     }
+
 
 
     public bool isSpatialOn = true;

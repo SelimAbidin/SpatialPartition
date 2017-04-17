@@ -82,38 +82,47 @@ public class Grid
         {
             for (int y = 0; y < HEIGHT_NUM_CELLS; y++)
             {
-                HandleCell(_cells[x][y]);
+                HandleCell(x,y);
             }
         }
     }
 
-    private void HandleCell(Unit unit)
+    private void HandleCell(int x , int y)
     {
+        Unit unit = _cells[x][y];
         while (unit != null)
         {
-            Unit other = unit._next;
-            while (other != null)
+            HandleUnit(unit, unit._next);
+
+            if (x > 0 && y > 0) HandleUnit(unit, _cells[x - 1][y - 1]);
+            if (x > 0) HandleUnit(unit, _cells[x - 1][y]);
+            if (y > 0) HandleUnit(unit, _cells[x][y - 1]);
+            if (x > 0 && y < HEIGHT_NUM_CELLS - 1)
             {
-                if (Distance(unit.x, other.x, unit.y, other.y) < 2)//if (unit.x == other.x && unit.y == other.y)
-                {
-                    HandleAttack(unit, other);
-                }
-                other = other._next;
+                HandleUnit(unit, _cells[x - 1][y + 1]);
             }
 
             unit = unit._next;
         }
     }
 
+    void HandleUnit(Unit unit, Unit other)
+    {
+        while (other != null)
+        {
+            if (Distance(unit.x, other.x, unit.y, other.y) < 2)
+            {
+                HandleAttack(unit, other);
+            }
+
+            other = other._next;
+        }
+    }
+
     private void HandleAttack(Unit unit, Unit other)
     {
-
-
-
-        //GameManager.clash.Add(new Vector3(unit.x, unit.y, 0));
-        //GameManager.clash.Add(new Vector3(other.x, other.y, 0));
-
-
+        GameManager.clash.Add(new Vector3(unit.x, unit.y, 0));
+        GameManager.clash.Add(new Vector3(other.x, other.y, 0));
     }
 
     private float Distance(float x1, float x2, float y1, float y2)
