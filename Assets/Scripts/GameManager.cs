@@ -88,10 +88,10 @@ public class GameManager : MonoBehaviour
 
     void Update ()
     {
-        
-        if(isSpatialOn)
+        clash.Clear();
+        if (isSpatialOn)
         {
-            clash.Clear();
+            
 
             grid.HandleMelee();
         }
@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour
                 Vector3 s1 = soldierList[i].transform.position;
                 Vector3 s2 = soldierList[j].transform.position;
 
-                if(Distance(s1.x, s2.x, s1.y, s2.y) < 2)
+                if(Distance(s1.x, s2.x, s1.y, s2.y) < GameManager.ATTACK_DIST)
                 {
                     HandleAttack(s1, s2);
                 }
@@ -134,6 +134,9 @@ public class GameManager : MonoBehaviour
 
 
     public bool isSpatialOn = true;
+
+    public static float ATTACK_DIST = 3;
+
     public void OnSpatialPartitionCheck(UnityEngine.UI.Toggle toggle)
     {
         isSpatialOn = toggle.isOn;

@@ -110,7 +110,7 @@ public class Grid
     {
         while (other != null)
         {
-            if (Distance(unit.x, other.x, unit.y, other.y) < 2)
+            if (Distance(unit.x, other.x, unit.y, other.y) < GameManager.ATTACK_DIST)
             {
                 HandleAttack(unit, other);
             }
